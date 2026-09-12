@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #05060a;
+  --color-surface: #0e1014;
+  --color-surface-2: #16181f;
+  --color-fg: #e8e6e1;
+  --color-muted: #8a8d96;
+  --color-faint: #5e626c;
+  --color-accent: #c5cdd8;
+  --color-accent-fg: #07080c;
+  --color-border: #2a2d36;
+  --color-ring: #c5cdd8;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --motion-stagger: 40ms;
+  --motion-micro: 80ms;
+  --motion-quick: 150ms;
+  --motion-fast: 250ms;
+  --motion-medium: 350ms;
+  --motion-slow: 400ms;
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: ease-in-out;
+  --motion-blur-sm: 2px;
+  --motion-y-base: 8px;
+  --motion-scale-modal: 0.96;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #app {
+    height: 100%;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+.planet-label {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: color-mix(in oklab, var(--color-fg) 82%, transparent);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 1px 10px var(--color-bg);
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.planet-label-active {
+  color: var(--color-fg);
+}
+
+.vignette {
+  pointer-events: none;
+  z-index: 10;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 48%,
+    color-mix(in oklab, var(--color-bg) 72%, transparent) 100%
+  );
+}
+
+.hud-enter {
+  animation: hud-enter var(--motion-slow) var(--ease-smooth-out) both;
+}
+
+@keyframes hud-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--motion-y-base));
+    filter: blur(var(--motion-blur-sm));
+  }
+  to {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+.boot-bar {
+  width: 100%;
+  transform: scaleX(0);
+  animation: boot-fill 1.6s linear forwards;
+}
+
+@keyframes boot-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-enter,
+  .boot-bar {
+    animation: none;
+  }
+
+  .boot-bar {
+    transform: scaleX(1);
+  }
+}
